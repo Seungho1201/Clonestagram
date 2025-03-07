@@ -1,0 +1,240 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Instagram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="small"></script>
+</head>
+
+<body class="bg-gray-50">
+
+<header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+    <div class="max-w-8xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+
+            <div class="flex-shrink-0">
+                <img src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Instagram" class="h-8"/>
+            </div>
+
+
+            <div class="hidden md:block flex-1 max-w-md mx-8">
+                <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    <input type="text" placeholder="Search" class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:border-gray-400"/>
+                </div>
+            </div>
+            <div class="flex items-center space-x-6">
+                <a href="#" class="text-gray-700 hover:text-gray-900"><i class="fas fa-home text-xl"></i></a>
+                <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-paper-plane text-xl"></i></a>
+                <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-plus-square text-xl"></i></a>
+                <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-compass text-xl"></i></a>
+                <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-heart text-xl"></i></a>
+                <button class="h-8 w-8 rounded-full overflow-hidden">
+                    <img src="https://placehold.co/80" alt="Profile" class="h-full w-full object-cover"/>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="pt-20 pb-16 max-w-8xl mx-auto px-4 flex gap-12">
+    <div class="hidden lg:block w-64 fixed left-8">
+        <div class="space-y-4">
+            <div class="bg-white rounded-lg shadow p-4">
+                <h2 class="font-semibold mb-3">Navigation</h2>
+                <ul class="space-y-2">
+                    <li>
+                        <a href="#" class="flex items-center text-gray-700 hover:text-custom">
+                            <i class="fas fa-home w-5"></i>
+                            <span>Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center text-gray-700 hover:text-custom">
+                            <i class="fas fa-search w-5"></i>
+                            <span>Search</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center text-gray-700 hover:text-custom">
+                            <i class="far fa-compass w-5"></i>
+                            <span>Explore</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center text-gray-700 hover:text-custom">
+                            <i class="far fa-play-circle w-5"></i>
+                            <span>Reels</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#" class="flex items-center text-gray-700 hover:text-custom">
+                            <i class="far fa-paper-plane w-5"></i>
+                            <span>Messages</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="bg-white rounded-lg shadow p-4">
+                <h2 class="font-semibold mb-3">Trending Topics</h2>
+                <div class="space-y-3">
+                    <div class="text-sm">
+                        <p class="font-medium">#집가고싶다</p>
+                        <p class="text-gray-500 text-xs">Plz Home
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-1 max-w-2xl mx-auto lg:ml-72">
+
+        <!--스토리-->
+        <div class="bg-white rounded-lg shadow mb-6 p-4 overflow-x-auto">
+            <div class="flex space-x-4">
+
+                <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+                    <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-yellow-400 to-custom">
+                        <img src="https://placehold.co/80" alt="Story" class="rounded-full border-2 border-white"/>
+                    </div>
+                    <span class="text-xs">Your Story</span>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="space-y-6" th:each="post:${postData2}" >
+            <article class="bg-white rounded-lg shadow">
+
+                <!--프로필 이미지-->
+                <div class="p-4 flex items-center">
+                    <img src="https://placehold.co/80" alt="Profile" class="h-8 w-8 rounded-full mr-3"/>
+                    <div class="flex-1">
+                        <!--작성자 ID-->
+                        <h3 class="font-semibold text-sm" th:text="${post.postUserId}">작성자 ID</h3>
+                    </div>
+                    <button class="text-gray-700">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </button>
+                </div>
+
+                <!--게시글 이미지-->
+                <div class="aspect-w-4 aspect-h-5">
+                    <img src="https://placehold.co/500" alt="Post" class="w-full h-full object-cover"/>
+                </div>
+
+                <!--이미지 아래 버튼-->
+                <div class="p-4">
+                    <div class="flex items-center space-x-4 mb-4">
+                        <!--Likes-->
+                        <button class="text-2xl text-gray-700 hover:text-gray-900">
+                            <i class="far fa-heart"></i>
+                        </button>
+
+                        <!--Comment-->
+                        <button class="text-2xl text-gray-700 hover:text-gray-900">
+                            <i class="far fa-comment"></i>
+                        </button>
+
+                        <!--DM-->
+                        <button class="text-2xl text-gray-700 hover:text-gray-900">
+                            <i class="far fa-paper-plane"></i>
+                        </button>
+
+                        <div class="flex-1"></div>
+
+                        <!--Bookmark-->
+                        <button class="text-2xl text-gray-700 hover:text-gray-900">
+                            <i class="far fa-bookmark"></i>
+                        </button>
+                    </div>
+
+                    <!--하단 내용-->
+                    <div class="space-y-2">
+                        <!--좋아요 수-->
+                        <p class="font-semibold text-sm" th:text="${post.postRecommend}">likes</p>
+
+                        <p class="text-sm">
+                            <!--작성자 ID-->
+                            <span class="font-semibold" th:text="${post.postUserId}">작성자 ID</span>
+                            <span th:text="${post.postContent}">게시글 내용</span>
+
+                        </p>
+
+                    </div>
+                </div>
+                <div class="p-4 border-t">
+                    <div class="flex items-center">
+                        <button class="text-xl text-gray-400 mr-4">
+                            <i class="far fa-smile"></i>
+                        </button>
+                        <input type="text" placeholder="Add a comment..." class="flex-1 text-sm border-none focus:ring-0"/>
+                        <button class="text-custom font-semibold text-sm ml-4">Post</button>
+                    </div>
+                </div>
+            </article>
+            <br>
+        </div>
+
+    </div>
+
+    <!-- 우측 사이드바 -->
+    <div class="hidden lg:block w-80 ml-12">
+        <div class="fixed w-80">
+            <div class="flex items-center space-x-4 mb-6">
+                <img src="https://placehold.co/80" alt="Profile" class="h-12 w-12 rounded-full"/>
+                <div>
+                    <h3 class="font-semibold text-sm">유저 이름</h3>
+                    <p class="text-sm text-gray-500">유저아이디</p>
+                </div>
+
+                <button class="ml-auto text-custom text-sm font-semibold">계정전환</button>
+
+            </div>
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-sm font-semibold text-gray-500">Suggestions For You</h3>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex items-center">
+                        <img src="https://placehold.co/80" alt="Suggestion" class="h-8 w-8 rounded-full mr-3"/>
+                        <div class="flex-1">
+                            <h4 class="text-sm font-semibold">추천유저 ID</h4>
+                        </div>
+                        <button class="text-custom text-xs font-semibold">Follow</button>
+                    </div>
+
+
+
+                </div>
+            </div>
+            <footer class="text-xs text-gray-400">
+                <nav class="mb-4">
+                    <ul class="flex flex-wrap gap-x-2">
+                        <li><a href="#" class="hover:underline">Front from AI</a></li>
+                    </ul>
+                </nav>
+
+                <p>© 2025 CLONESTAGRAM FROM SEUNGHO</p>
+            </footer>
+        </div>
+    </div>
+</main>
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200">
+    <div class="flex justify-around py-3">
+        <a href="#" class="text-xl text-gray-700"><i class="fas fa-home"></i></a>
+        <a href="#" class="text-xl text-gray-700"><i class="fas fa-search"></i></a>
+        <a href="#" class="text-xl text-gray-700"><i class="far fa-plus-square"></i></a>
+        <a href="#" class="text-xl text-gray-700"><i class="far fa-play-circle"></i></a>
+        <a href="#" class="text-xl text-gray-700">
+            <img src="https://creatie.ai/ai/api/search-image?query=A professional headshot of a young person with a friendly smile, wearing casual attire, against a neutral background. The lighting is soft and natural, creating a welcoming and approachable appearance.&width=80&height=80&orientation=squarish&flag=0cb04414-97a3-4205-8392-f223e88e10a6&flag=03240ae7-b333-4716-8eb4-a26235b1b544&flag=3d055ec5-7e46-4769-8dee-16e0917d5e32" alt="Profile" class="h-6 w-6 rounded-full"/>
+        </a>
+    </div>
+</nav>

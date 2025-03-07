@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="small"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center">
+<div class="max-w-md w-full mx-auto">
+    <div class="bg-white p-8 border border-gray-200 rounded-lg shadow-sm mb-6">
+        <div class="flex justify-center mb-8">
+            <img src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Logo" class="h-12"/>
+        </div>
+
+        <form class="space-y-5">
+            <div>
+                <input type="text" placeholder="Email or username" class="w-full h-11 px-4 border border-gray-200 rounded-md focus:border-custom focus:ring-custom"/>
+            </div>
+
+            <div>
+                <input type="password" placeholder="Password" class="w-full h-11 px-4 border border-gray-200 rounded-md focus:border-custom focus:ring-custom"/>
+            </div>
+
+            <button type="submit" class="w-full bg-custom text-white font-medium h-11 rounded-md hover:bg-custom/90 transition-colors">
+                Log In
+            </button>
+        </form>
+
+        <div class="flex items-center my-7">
+            <div class="flex-1 border-t border-gray-200"></div>
+            <span class="px-4 text-sm text-gray-500 font-medium">OR</span>
+            <div class="flex-1 border-t border-gray-200"></div>
+        </div>
+
+
+        <div class="text-center">
+            <a href="/test" class="text-sm text-custom hover:underline">Forgot password?</a>
+        </div>
+    </div>
+
+    <div class="bg-white p-6 border border-gray-200 rounded-lg text-center shadow-sm">
+        <p class="text-sm">
+            Don&#39;t have an account?
+            <a href="#" class="text-custom font-semibold hover:underline">Sign up</a>
+        </p>
+    </div>
+
+</div>

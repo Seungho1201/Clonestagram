@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Copystagram</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        .header, .footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+        }
+        .sidebar {
+            width: 230px;
+            background: #f4f4f4;
+            padding: 10px;
+        }
+        .sidebar_right{
+
+        }
+        .main {
+            flex: 1;
+            padding: 10px;
+
+        }
+        .mainPost div{
+
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="content">
+        <div class="sidebar">
+            사이드바
+        </div>
+
+        <div class="main">
+
+            <div style="border: 1px solid; width: 70%" >
+                <h3>스토리</h3>
+            </div>
+
+            <br>
+
+            <div class = "mainPost" th:each="post:${postData2}" >
+                <div style="width: 470px; border: 1px solid;">
+
+
+                    <!--작성자 ID-->
+                    <div style="display: flex;">
+                        <img src="https://placehold.co/30">
+                        <p th:text="${post.postUserId}"></p>
+                        <p style="margin-left: auto;">(More)</p>
+                    </div>
+
+                    <!--게시글 이미지-->
+                    <div style="text-align: center;">
+                        <img src="https://placehold.co/470"
+                             style="border-radius: 2%">
+                    </div>
+
+                    <!--좋아요 수, 댓글 링크, -->
+                    <div style="display: flex;">
+                        <img src="/images/recommend.png">
+                        <p>(Recommend)</p>
+                        <p>(Comment)</p>
+                        <p>(DM)</p>
+
+                        <p style="margin-left: auto;"> (SCRAP)</p>
+                    </div>
+
+                    <!-- 좋아요 수 -->
+                    <div>
+                        <p th:text="${'좋아요 ' + post.postRecommend+ '개'}"></p>
+                    </div>
+
+                    <!-- 게시글 내용 -->
+                    <div style="height: 50px">
+                        <p th:text="${post.postContent}">게시글 내용</p>
+                    </div>
+
+
+                    <hr>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+</body>
+</html>
