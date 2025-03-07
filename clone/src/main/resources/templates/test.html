@@ -32,8 +32,7 @@
             <div class="flex items-center space-x-6">
                 <a href="#" class="text-gray-700 hover:text-gray-900"><i class="fas fa-home text-xl"></i></a>
                 <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-paper-plane text-xl"></i></a>
-                <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-plus-square text-xl"></i></a>
-                <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-compass text-xl"></i></a>
+                <a href="/post" class="text-gray-700 hover:text-gray-900"><i class="far fa-plus-square text-xl"></i></a>
                 <a href="#" class="text-gray-700 hover:text-gray-900"><i class="far fa-heart text-xl"></i></a>
                 <button class="h-8 w-8 rounded-full overflow-hidden">
                     <img src="https://placehold.co/80" alt="Profile" class="h-full w-full object-cover"/>
@@ -190,8 +189,8 @@
             <div class="flex items-center space-x-4 mb-6">
                 <img src="https://placehold.co/80" alt="Profile" class="h-12 w-12 rounded-full"/>
                 <div>
-                    <h3 class="font-semibold text-sm">유저 이름</h3>
-                    <p class="text-sm text-gray-500">유저아이디</p>
+                    <h3 class="font-semibold text-sm" th:text="${userName}">유저 이름</h3>
+                    <p class="text-sm text-gray-500" th:text="${userId}">유저아이디</p>
                 </div>
 
                 <button class="ml-auto text-custom text-sm font-semibold">계정전환</button>

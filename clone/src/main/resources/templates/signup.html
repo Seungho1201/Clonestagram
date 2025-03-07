@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign up • Instagram</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="small"></script>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col items-center justify-center py-8 font-['Inter']">
+<main class="w-full max-w-[350px] mx-auto">
+    <div class="bg-white p-10 border border-gray-300 mb-4 text-center">
+    <img src="https://ai-public.creatie.ai/gen_page/logo_placeholder.png" alt="Instagram" class="h-12 mx-auto mb-8">
+    <h2 class="text-gray-600 font-medium text-lg mb-6">Sign up to see photos and videos from your friends</h2>
+
+
+    <form class="space-y-4" method="POST" action="/signupUser">
+        <div class="relative">
+            <input name="userEmail" type="text" placeholder="Mobile Number or Email" class="w-full border border-gray-300 px-3 py-2 !rounded-button text-sm focus:border-gray-400 focus:outline-none">
+        </div>
+
+        <div class="relative">
+            <input name="userName" type="text" placeholder="Full Name" class="w-full border border-gray-300 px-3 py-2 !rounded-button text-sm focus:border-gray-400 focus:outline-none">
+        </div>
+
+        <div class="relative">
+            <input name="userId" type="text" placeholder="UserID" class="w-full border border-gray-300 px-3 py-2 !rounded-button text-sm focus:border-gray-400 focus:outline-none">
+        </div>
+
+        <div class="relative">
+            <input name="userPassword" type="password" placeholder="Password" class="w-full border border-gray-300 px-3 py-2 !rounded-button text-sm focus:border-gray-400 focus:outline-none">
+        </div>
+
+        <button  type="submit" class="!rounded-button w-full bg-custom text-white font-semibold py-2">
+            Sign up
+        </button>
+    </form>
+
+    <p class="text-xs text-gray-500 mt-6">
+        By signing up, you agree to our Terms, Data Policy and Cookies Policy.
+    </p>
+</div>
+
+    <div class="bg-white p-6 border border-gray-300 text-center">
+        <p class="text-sm">
+            Have an account?
+            <a href="/login" class="text-custom font-semibold">Log in</a>
+        </p>
+    </div>
+
+
+</main>
+</body>
+</html>
