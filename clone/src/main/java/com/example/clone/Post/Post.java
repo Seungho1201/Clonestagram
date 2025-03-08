@@ -14,8 +14,8 @@ import org.hibernate.annotations.CreationTimestamp;
 @ToString
 public class Post {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long postId;            // 게시글 ID
-    private Long postRecommend;     // 게시글 추천 수
+    private Long postId;            // 게시글 ID
+    private Long postRecommend= 0L;     // 게시글 추천 수 기본값 0
     @NonNull
     private String postUserId;      // 게시글 작성 유저
     @NonNull

@@ -7,6 +7,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class PostController {
 
     private final PostRepository postRepository;
+    private final PostService postService;
 
     // 메인 게시글 API
     @GetMapping("/main")
@@ -31,36 +34,61 @@ public class PostController {
     String testList(Model model, Authentication auth) {
 
         // 게시글 리스트 페이지 전송
-        List<Post> postData2 = postRepository.findAll();
+        List<Post> postData2 = postService.sendPostList();
+
+        // 로그인 상태 아니여도 접속 가능
         model.addAttribute("postData2", postData2);
 
-
+        // 로그아웃 상태일시
         if(auth == null){
-
             model.addAttribute("userName", "오프라인");
             model.addAttribute("userId", "오프라인");
 
             return "test.html";
         }
 
-        // 유저 정보 페이지 전송
-        MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
+        // 로그인 상태일 시 메인 페이지로 전송할 유저 데이터
+        MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
 
-        String userId = user.userId;
-        String userName = user.getUsername();
-
-        model.addAttribute("userName", userName);
-        model.addAttribute("userId", userId);
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("userId", user.userId);
 
         return "test.html";
     }
 
     @GetMapping("/post")
-    String goPost(Authentication auth) {
+    String goPost(Model model, Authentication auth) {
 
-        System.out.println(auth);
+        // 로그아웃 상태일 시 로그인 페이지로 보냄
+        if(auth == null){
+            return "redirect:/login";
+        }
+
+        // 유저 데이터 가져오는 서비스 재활용
+        MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
+
+        // 포스트 페이지에 필요한 유저데이터는 아이디만
+        model.addAttribute("userId", user.userId);
 
         return "post.html";
+    }
+
+    @PostMapping("/postfunc")
+    String goPostFunc(Model model, Authentication auth,
+                      @RequestParam String postData) {
+
+        // 유저 데이터 가져오는 서비스 재활용
+        MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
+
+        Post post = new Post();
+
+        post.setPostUserId(user.userId);
+        post.setPostContent(postData);
+        post.setPostImg("아직 이미지 미구현");
+
+        postRepository.save(post);
+
+        return "redirect:/test";
     }
 
 }

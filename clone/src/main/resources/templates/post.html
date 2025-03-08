@@ -30,9 +30,11 @@
         <div class="grid md:grid-cols-2">
             <div class="aspect-square bg-gray-50 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
                 <div class="text-center p-6">
+
                 <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
                     <i class="fas fa-image text-3xl text-gray-400"></i>
                 </div>
+
                 <h3 class="text-xl font-semibold mb-2">Drag photos and videos here</h3>
 
                 <button class="bg-custom text-white px-4 py-2 rounded !rounded-button hover:bg-opacity-90 transition-colors">
@@ -41,18 +43,26 @@
             </div>
         </div>
 
-        <div class="p-4">
-            <!--유저 데이터-->
-            <div class="flex items-center mb-4">
-                <img src="https://placehold.co/470" alt="Profile" class="h-8 w-8 rounded-full"/>
-                <span class="ml-3 font-semibold text-sm">유저 ID</span>
+        <form method="post" action="/postfunc">
+            <div class="p-4">
+
+                <!--유저 데이터-->
+                <div class="flex items-center mb-4">
+                    <img src="https://placehold.co/470" alt="Profile" class="h-8 w-8 rounded-full"/>
+                    <span class="ml-3 font-semibold text-sm" th:text="${userId}">유저 ID</span>
+                </div>
+
+                <!--텍스트-->
+                <textarea name="postData" placeholder="Write a caption..." class="w-full h-40 resize-none border-0 focus:ring-0 text-sm"></textarea>
             </div>
 
-            <!--텍스트-->
-            <textarea placeholder="Write a caption..." class="w-full h-40 resize-none border-0 focus:ring-0 text-sm"></textarea>
+            <button  type="submit" class="!rounded-button w-full bg-custom text-white font-semibold py-2">
+                Post
+            </button>
 
-
+        </form>
         </div>
     </div>
-    </div>
-</main></body></html>
+</main>
+</body>
+</html>

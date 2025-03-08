@@ -26,15 +26,16 @@ public class MyUserDetailsService implements UserDetailsService {
 
 
         if (result.isEmpty()){
-            throw new UsernameNotFoundException("그런 아이디 없음");
+            throw new UsernameNotFoundException("존재하지 않는 ID");
         }
 
         var user = result.get();
 
+        // 권한 부여 위한 리스트
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         // 권한 부여
-        authorities.add(new SimpleGrantedAuthority("일반유저"));
+        authorities.add(new SimpleGrantedAuthority("normal"));
 
         var customUser = new CustomUser(user.getUserName(),
                                                 user.getUserPassword(),
