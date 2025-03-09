@@ -2,11 +2,13 @@ package com.example.clone.Post;
 
 import com.example.clone.Member.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -89,6 +91,16 @@ public class PostController {
         postRepository.save(post);
 
         return "redirect:/test";
+    }
+
+
+    @GetMapping("/postDetail/{id}")
+    ResponseEntity<Post> postDetail(@PathVariable Long id){
+
+        Post post = postRepository.findById(id).orElse(null);
+        System.out.println(post);
+
+        return ResponseEntity.ok(post); // JSON 응답 반환
     }
 
 }

@@ -23,11 +23,36 @@
 
         align-items: center;
         justify-content: center ;
-        animation: fadeIn 0.5s ease-out; /* 모달이 나타날 때 애니메이션 추가 */
+        animation: fadeIn 0.3s ease-out; /* 모달이 나타날 때 애니메이션 추가 */
     }
 
     .modal-content {
         width: 30%;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        position: relative;
+    }
+
+
+    .postModal{
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+
+        align-items: center;
+        justify-content: center ;
+        animation: fadeIn 0.3s ease-out; /* 모달이 나타날 때 애니메이션 추가 */
+    }
+
+    .postModal-content{
+        width: 70%;
+        height: 75%;
         background: white;
         padding: 20px;
         border-radius: 10px;
@@ -173,7 +198,9 @@
                         </button>
 
                         <!--Comment-->
-                        <button class="text-2xl text-gray-700 hover:text-gray-900">
+                        <button
+                                class="text-2xl text-gray-700 hover:text-gray-900 testAjax"
+                                onclick="openPostModal()">
                             <i class="far fa-comment"></i>
                         </button>
 
@@ -193,7 +220,7 @@
                     <!--하단 내용-->
                     <div class="space-y-2">
                         <!--좋아요 수-->
-                        <p class="font-semibold text-sm" th:text="${post.postRecommend}">likes</p>
+                        <p class="font-semibold text-sm" th:text="${'좋아요 ' + post.postRecommend + '개'}">likes</p>
 
                         <p class="text-sm">
                             <!--작성자 ID-->
@@ -253,7 +280,7 @@
                     </ul>
                 </nav>
 
-                <p>© 2025 CLONESTAGRAM FROM Github : Seungho1201</p>
+                <p>© 2025 CLONESTAGRAM FROM GitHub : Seungho1201</p>
             </footer>
         </div>
     </div>
@@ -305,6 +332,63 @@
     </div>
 </div>
 
+<!-- 게시글 댓글 모달 -->
+<div class="postModal" id="postModal">
+    <div class="postModal-content" style="text-align: center; display: flex">
+
+        <div style="padding: 20px">
+            <img src="https://placehold.co/600"/>
+        </div>
+
+        <div>
+            <div onclick="closePostModal()" style="height: 40px; padding-top: 10px; display: flex">
+                <img src="https://placehold.co/80" alt="Suggestion" class="h-8 w-8 rounded-full mr-3"/>
+                <p id="postUserId"></p>   <!-- 작성자 -->
+                <h3 style="margin-left: auto">X</h3>
+            </div>
+
+            <br>
+            <hr>
+
+            <div style="padding: 20px; width: 500px; height:400px; text-align: left">
+                <p id="postContent"></p>  <!-- 내용 -->
+
+
+                <div id="postImg"></div> <!-- 이미지 -->
+            </div>
+
+            <div style="margin-bottom: 0px">
+                <div style="text-align: left">
+                    <!--Likes-->
+                    <button class="text-2xl text-gray-700 hover:text-gray-900" style="margin-right: 10px">
+                        <i class="far fa-heart"></i>
+                    </button>
+
+                    <!--Comment-->
+                    <button class="text-2xl text-gray-700 hover:text-gray-900 testAjax" style="margin-right: 10px"
+                            onclick="openPostModal()">
+                        <i class="far fa-comment"></i>
+                    </button>
+
+                    <!--DM-->
+                    <button class="text-2xl text-gray-700 hover:text-gray-900">
+                        <i class="far fa-paper-plane"></i>
+                    </button>
+
+                    <p id="postRecommend"></p>  <!-- 추천 수 -->
+                    <p id="postDate"></p>    <!-- 날짜 -->
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
 
 
 <script>
@@ -316,6 +400,43 @@
     function closeModal() {
         document.getElementById("modal").style.display = "none";
     }
+
+    // 모달 열기
+    function openPostModal() {
+
+
+        document.getElementById("postModal").style.display = "flex";
+
+    }
+    // 모달 닫기
+    function closePostModal() {
+        document.getElementById("postModal").style.display = "none";
+    }
+
+    document.querySelectorAll('.testAjax')[0].addEventListener('click', function(id){
+
+        fetch('/postDetail/5')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("서버 응답 실패");
+                }
+                return response.json();  // JSON 변환
+            })
+            .then(data => {
+                console.log("받은 데이터:", data);
+
+                // 각 요소를 찾아서 데이터 삽입
+                document.getElementById('postContent').innerText = data.postContent;
+                document.getElementById('postUserId').innerText = `${data.postUserId}`;
+                document.getElementById('postRecommend').innerText = `${data.postRecommend}`;
+                document.getElementById('postDate').innerText = `${data.postDate || "정보 없음"}`;
+
+            })
+            .catch(error => {
+                console.error("에러 발생:", error);
+            });
+    });
+
 
 </script>
 
