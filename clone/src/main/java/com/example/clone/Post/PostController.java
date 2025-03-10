@@ -62,9 +62,7 @@ public class PostController {
     String goPost(Model model, Authentication auth) {
 
         // 로그아웃 상태일 시 로그인 페이지로 보냄
-        if(auth == null){
-            return "redirect:/login";
-        }
+        if(auth == null){ return "redirect:/login"; }
 
         // 유저 데이터 가져오는 서비스 재활용
         MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
@@ -75,25 +73,25 @@ public class PostController {
         return "post.html";
     }
 
+    // 게시글 포스팅 기능
     @PostMapping("/postfunc")
     String goPostFunc(Model model, Authentication auth,
                       @RequestParam String postData) {
-
         // 유저 데이터 가져오는 서비스 재활용
         MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
 
-        Post post = new Post();
+        // 게시글 업로드 서비스
+        int result = postService.postFuncService(user, postData);
 
-        post.setPostUserId(user.userId);
-        post.setPostContent(postData);
-        post.setPostImg("아직 이미지 미구현");
-
-        postRepository.save(post);
-
-        return "redirect:/test";
+        if(result == 200){
+            // 서비스 수행 후 메인 페이지로
+            return "redirect:/test";
+        } else{
+            return "redirect:/post";
+        }
     }
 
-
+    // 상세 페이지 Ajax 응답 API
     @GetMapping("/postDetail/{id}")
     ResponseEntity<Post> postDetail(@PathVariable Long id){
 

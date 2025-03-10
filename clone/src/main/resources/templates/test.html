@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Instagram</title>
+    <title>Clonestagram</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
     <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet"/>
@@ -23,7 +23,7 @@
 
         align-items: center;
         justify-content: center ;
-        animation: fadeIn 0.3s ease-out; /* 모달이 나타날 때 애니메이션 추가 */
+        animation: fadeIn 0.15s ease-out; /* 모달이 나타날 때 애니메이션 추가 */
     }
 
     .modal-content {
@@ -52,7 +52,7 @@
 
     .postModal-content{
         width: 70%;
-        height: 75%;
+        height: 675px;
         background: white;
         padding: 20px;
         border-radius: 10px;
@@ -160,6 +160,7 @@
             <div class="flex space-x-4">
 
                 <div class="flex flex-col items-center space-y-1 flex-shrink-0">
+
                     <div class="w-16 h-16 rounded-full p-0.5 bg-gradient-to-tr from-yellow-400 to-custom">
                         <img src="https://placehold.co/80" alt="Story" class="rounded-full border-2 border-white"/>
                     </div>
@@ -200,9 +201,11 @@
                         <!--Comment-->
                         <button
                                 class="text-2xl text-gray-700 hover:text-gray-900 testAjax"
-                                onclick="openPostModal()">
+                                th:data-post-id="${post.postId}"
+                                onclick="openPostModal(this);">
                             <i class="far fa-comment"></i>
                         </button>
+
 
                         <!--DM-->
                         <button class="text-2xl text-gray-700 hover:text-gray-900">
@@ -221,7 +224,6 @@
                     <div class="space-y-2">
                         <!--좋아요 수-->
                         <p class="font-semibold text-sm" th:text="${'좋아요 ' + post.postRecommend + '개'}">likes</p>
-
                         <p class="text-sm">
                             <!--작성자 ID-->
                             <span class="font-semibold" th:text="${post.postUserId}">작성자 ID</span>
@@ -276,7 +278,7 @@
             <footer class="text-xs text-gray-400">
                 <nav class="mb-4">
                     <ul class="flex flex-wrap gap-x-2">
-                        <li><a href="#" class="hover:underline">Front from AI</a></li>
+                        <li><a href="https://creatie.ai/" class="hover:underline">Front from Creatie AI</a></li>
                     </ul>
                 </nav>
 
@@ -338,6 +340,7 @@
 
         <div style="padding: 20px">
             <img src="https://placehold.co/600"/>
+            <br>
         </div>
 
         <div>
@@ -350,7 +353,7 @@
             <br>
             <hr>
 
-            <div style="padding: 20px; width: 500px; height:400px; text-align: left">
+            <div style="padding: 20px; width: 450px; height:470px; text-align: left">
                 <p id="postContent"></p>  <!-- 내용 -->
 
 
@@ -366,7 +369,7 @@
 
                     <!--Comment-->
                     <button class="text-2xl text-gray-700 hover:text-gray-900 testAjax" style="margin-right: 10px"
-                            onclick="openPostModal()">
+                            >
                         <i class="far fa-comment"></i>
                     </button>
 
@@ -402,7 +405,12 @@
     }
 
     // 모달 열기
-    function openPostModal() {
+    function openPostModal(button) {
+
+        // 버튼에서 data-post-id 값을 가져옴
+        const postId = button.getAttribute("data-post-id");
+        console.log(postId);
+        setDetailData(postId)
 
 
         document.getElementById("postModal").style.display = "flex";
@@ -413,9 +421,8 @@
         document.getElementById("postModal").style.display = "none";
     }
 
-    document.querySelectorAll('.testAjax')[0].addEventListener('click', function(id){
-
-        fetch('/postDetail/5')
+    function setDetailData(id){
+        fetch(`/postDetail/${id}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("서버 응답 실패");
@@ -435,7 +442,7 @@
             .catch(error => {
                 console.error("에러 발생:", error);
             });
-    });
+    }
 
 
 </script>

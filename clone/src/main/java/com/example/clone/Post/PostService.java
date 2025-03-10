@@ -3,6 +3,7 @@ package com.example.clone.Post;
 import com.example.clone.Member.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -27,6 +28,29 @@ public class PostService {
         MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
 
         return user;
+    }
+
+    // 게시글 업로드 서비스
+    public int postFuncService(User user, String postData){
+        MyUserDetailsService.CustomUser userData = (MyUserDetailsService.CustomUser) user;
+
+        // 본문 데이터 있어야만 저장
+        if(postData.isEmpty()){
+            System.out.println("없음 ㅅㄱ");
+            return 404;
+        }
+
+        Post post = new Post();
+
+        post.setPostUserId(userData.userId);
+        post.setPostContent(postData);
+        post.setPostImg("아직 이미지 미구현");
+
+
+        // 데이터 저장
+        postRepository.save(post);
+
+        return 200;
     }
 
 
