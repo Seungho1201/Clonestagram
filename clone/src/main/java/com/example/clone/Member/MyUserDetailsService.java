@@ -41,7 +41,6 @@ public class MyUserDetailsService implements UserDetailsService {
                                                 user.getUserPassword(),
                                                 authorities);
 
-
         // 아이디 받을수있게 커스텀
         customUser.userId = user.getUserId();
 

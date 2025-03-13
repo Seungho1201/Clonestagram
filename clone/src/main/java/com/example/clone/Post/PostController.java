@@ -96,7 +96,6 @@ public class PostController {
     ResponseEntity<Post> postDetail(@PathVariable Long id){
 
         Post post = postRepository.findById(id).orElse(null);
-        System.out.println(post);
 
         return ResponseEntity.ok(post); // JSON 응답 반환
     }
