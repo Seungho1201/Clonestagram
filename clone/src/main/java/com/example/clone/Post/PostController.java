@@ -7,10 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -99,5 +96,75 @@ public class PostController {
 
         return ResponseEntity.ok(post); // JSON 응답 반환
     }
+
+    // 수정 페이지
+    @GetMapping("/edit/{id}")
+    String editPost(@PathVariable Long id, Model model, Authentication auth) {
+
+        // 해당 게시글 데이터 가져옴
+        Post post = postRepository.findById(id).orElse(null);
+
+        // 유저 데이터 가져오는 서비스 재활용
+        MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
+
+        // 존재안할시 혹시 모르니 원래 페이지로
+        if(post == null){ return "test"; }
+
+        // 로그아웃 상태로 진입시 로그인 페이지로
+        if(user.userId == null){ return "redirect:/login"; }
+
+        // 게시글 작성자랑 수정하려는 id 다를시 원래 페이지로
+        if(!user.userId.equals(post.getPostUserId())){
+            System.out.println("누구새요?");
+            return "test";
+        }
+
+        model.addAttribute("postData", post);
+        model.addAttribute("userId", user.userId);
+
+        return "editPost";
+    }
+
+    @PostMapping("/editpost")
+    String editPost(@RequestParam String postData,
+                    @RequestParam Long postId,
+                    @RequestParam Long postRecommend,
+                    @RequestParam String postUserId){
+
+        Post post = new Post();
+
+        System.out.println("드가자");
+        System.out.println(postData);
+        System.out.println(postId);
+        System.out.println(postRecommend);
+        System.out.println(postUserId);
+
+
+        post.setPostId(postId);
+        post.setPostContent(postData);
+        post.setPostUserId(postUserId);
+        post.setPostRecommend(postRecommend);
+        post.setPostImg("미구현");
+
+        postRepository.save(post);
+
+
+        return "redirect:/test";
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deletePost(@PathVariable Long id, Authentication auth){
+
+        MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
+
+        Post post = postRepository.findById(id).orElse(null);
+
+
+        postRepository.deleteById(id);
+
+
+        return ResponseEntity.ok("삭제 완료");
+    }
+
 
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>    <title>Instagram Clone</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://ai-public.creatie.ai/gen_page/tailwind-custom.css" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com/3.4.5?plugins=forms@0.5.7,typography@0.5.13,aspect-ratio@0.4.2,container-queries@0.1.1"></script>
+    <script src="https://ai-public.creatie.ai/gen_page/tailwind-config.min.js" data-color="#000000" data-border-radius="small"></script>
+</head>
+<body class="bg-gray-50">
+<header class="fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50">
+    <div class="max-w-8xl mx-auto px-4">
+        <div class="flex items-center justify-between h-16">
+            <div class="flex-shrink-0">
+                <button class="text-custom hover:text-gray-600">
+                    <i class="fas fa-arrow-left text-xl mr-4"></i>
+                </button>
+                <span class="font-semibold">Create new post</span>
+            </div>
+            <button class="text-blue-500 font-semibold hover:text-blue-600">Share</button>
+        </div>
+    </div>
+</header>
+<br>
+<br>
+<br>
+<main class="pt-20 pb-8 max-w-4xl mx-auto px-4">
+    <div class="bg-white rounded-lg border border-gray-200">
+        <div class="grid md:grid-cols-2">
+            <div class="aspect-square bg-gray-50 flex items-center justify-center border-b md:border-b-0 md:border-r border-gray-200">
+                <div class="text-center p-6">
+
+                    <div class="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-image text-3xl text-gray-400"></i>
+                    </div>
+
+                    <h3 class="text-xl font-semibold mb-2">Drag photos and videos here</h3>
+
+                    <button class="bg-custom text-white px-4 py-2 rounded !rounded-button hover:bg-opacity-90 transition-colors">
+                        Select from computer
+                    </button>
+                </div>
+            </div>
+
+            <form method="post" action="/editpost">
+                <div class="p-4">
+
+                    <!--유저 데이터-->
+                    <div class="flex items-center mb-4">
+                        <img src="https://placehold.co/470" alt="Profile" class="h-8 w-8 rounded-full"/>
+                        <span class="ml-3 font-semibold text-sm" th:text="${userId}">유저 ID</span>
+                    </div>
+
+                    <!--텍스트-->
+                    <textarea th:text="${postData.postContent}" name="postData" class="w-full h-40 resize-none border-0 focus:ring-0 text-sm"></textarea>
+
+                    <input style="display: none" type="text" name="postId" th:value="${postData.postId}">
+                    <input style="display: none" type="text" name="postRecommend" th:value="${postData.postRecommend}">
+                    <input style="display: none" type="text" name="postUserId" th:value="${postData.postUserId}">
+
+                </div>
+
+                <button  type="submit" class="!rounded-button w-full bg-custom text-white font-semibold py-2">
+                    Edit
+                </button>
+
+            </form>
+        </div>
+    </div>
+</main>
+</body>
+</html>

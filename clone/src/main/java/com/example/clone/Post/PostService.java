@@ -11,6 +11,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 public class PostService {
+
     private final PostRepository postRepository;
 
     // 메인 페이지로 포스트 데이터 전송 서비스
@@ -46,12 +47,14 @@ public class PostService {
         post.setPostContent(postData);
         post.setPostImg("아직 이미지 미구현");
 
-
         // 데이터 저장
         postRepository.save(post);
 
         return 200;
     }
+
+
+
 
 
 }
