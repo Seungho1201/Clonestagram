@@ -133,13 +133,6 @@ public class PostController {
 
         Post post = new Post();
 
-        System.out.println("드가자");
-        System.out.println(postData);
-        System.out.println(postId);
-        System.out.println(postRecommend);
-        System.out.println(postUserId);
-
-
         post.setPostId(postId);
         post.setPostContent(postData);
         post.setPostUserId(postUserId);
