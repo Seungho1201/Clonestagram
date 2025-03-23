@@ -9,6 +9,7 @@
 - 로그인 및 회원가입
 - 게시글 CRUD         
 - 게시글 좋아요(추천)  // 구현중
+- 게시글 검색
 - 댓글                // 구현중
 
 # 🖼️ 실행 화면
@@ -33,3 +34,6 @@
 
 - 게시글 상세 페이지 <br>
 <img src="https://github.com/Seungho1201/Clonestagram/blob/main/img/Detail.png" alt="일반 플레이 화면" style="width:75%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">
+
+- 검색 기능(인덱스스) <br>
+<img src="https://github.com/Seungho1201/Clonestagram/blob/main/img/indexes.png" alt="일반 플레이 화면" style="width:75%; border: 1px solid #ddd; border-radius: 5px; padding: 5px;">

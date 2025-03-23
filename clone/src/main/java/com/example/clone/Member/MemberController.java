@@ -86,4 +86,6 @@ public class MemberController {
 
         return "mypage.html";
     }
+
+
 }

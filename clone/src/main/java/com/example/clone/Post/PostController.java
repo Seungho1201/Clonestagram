@@ -159,5 +159,32 @@ public class PostController {
         return ResponseEntity.ok("삭제 완료");
     }
 
+    @GetMapping("/search")
+    public String searchList(Model model, Authentication auth,
+                             @RequestParam String searchText){
+
+        // 로그아웃 상태일시
+        if(auth == null){
+            model.addAttribute("userName", "오프라인");
+            model.addAttribute("userId", "오프라인");
+
+            return "test.html";
+        }
+
+        // 로그인 상태일 시 메인 페이지로 전송할 유저 데이터
+        MyUserDetailsService.CustomUser user = postService.sendUserData(auth);
+
+        model.addAttribute("userName", user.getUsername());
+        model.addAttribute("userId", user.userId);
+
+        List<Post> postSearchData = postRepository.searchQuery(searchText);
+
+        model.addAttribute("postData2", postSearchData);
+
+        System.out.println(postSearchData);
+        System.out.println(searchText);
+
+        return "test";
+    }
 
 }
