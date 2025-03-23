@@ -370,31 +370,40 @@
     </div>
 </div>
 
-<!-- 게시글 댓글 모달 -->
+<!-- 게시글 상세페이지 댓글 모달 -->
 <div class="postModal" id="postModal">
     <div class="postModal-content" style="text-align: center; display: flex">
 
-        <div style="padding: 20px">
+        <div style="padding: 20px; width: 60%" >
             <img src="https://placehold.co/600"/>
             <br>
         </div>
 
-        <div>
+        <div style="padding: 20px; width: 40%" >
+            <!-- 상단 프로필이미지 + 유저 아이디-->
             <div onclick="closePostModal()" style="height: 40px; padding-top: 10px; display: flex">
+                <!-- 프로필 이미지 -->
                 <img src="https://placehold.co/80" alt="Suggestion" class="h-8 w-8 rounded-full mr-3"/>
-                <p id="postUserId"></p>   <!-- 작성자 -->
+
+                <!-- 작성자 -->
+                <p id="postUserId"></p>
+
+                <!-- 닫기 버튼 -->
                 <h3 style="margin-left: auto">X</h3>
             </div>
 
             <br>
             <hr>
 
-            <div style="padding: 20px; width: 450px; height:470px; text-align: left">
+            <!--게시글 내용-->
+            <div style="padding: 20px; height:10%; text-align: left">
                 <p id="postContent"></p>  <!-- 내용 -->
-
-
-                <div id="postImg"></div> <!-- 이미지 -->
             </div>
+
+            <hr>
+            <!--댓글 -->
+
+            <div id="commentContainer" style="text-align: left; height: 300px"></div>  <!-- 여기에 댓글을 추가 -->
 
             <div style="margin-bottom: 0px">
                 <div style="text-align: left">
@@ -404,8 +413,7 @@
                     </button>
 
                     <!--Comment-->
-                    <button class="text-2xl text-gray-700 hover:text-gray-900 testAjax" style="margin-right: 10px"
-                            >
+                    <button class="text-2xl text-gray-700 hover:text-gray-900 testAjax" style="margin-right: 10px">
                         <i class="far fa-comment"></i>
                     </button>
 
@@ -416,16 +424,47 @@
 
                     <p id="postRecommend"></p>  <!-- 추천 수 -->
                     <p id="postDate"></p>    <!-- 날짜 -->
+
+
+                    <p id="postId">  </p>
+                    <input type="text" id="commentContent">
+
+                    <a href="#" th:onclick="commentFunc()">[Post]</a>
+
+                        <script>
+                            function commentFunc(){
+                                // postId 값을 가져옴
+                                let postId = document.getElementById("postId").textContent.trim();
+                                let commentContent = document.getElementById("commentContent").value.trim();
+                                console.log(postId);
+                                console.log(commentContent);
+
+                                fetch(`/comment`, {
+                                    method: 'POST',  // POST 방식으로 요청 전송
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({ postId: postId, commentContent: commentContent }) // JSON 데이터로 전송
+                                })
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error("서버 응답 실패");
+                                        }
+                                        return response.text();  // 문자열로 변환
+                                        //return response.json();  // JSON 변환
+                                    })
+                                    .then(data => {
+                                        console.log(data);
+                                    })
+                                    .catch(error => {
+                                        console.error("에러 발생:", error);
+                                    });
+                            }
+                        </script>
                 </div>
-
             </div>
-
         </div>
-
-
     </div>
-
-
 </div>
 
 
@@ -458,6 +497,7 @@
     }
 
     function setDetailData(id){
+        // 상세 페이지
         fetch(`/postDetail/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -473,7 +513,41 @@
                 document.getElementById('postUserId').innerText = `${data.postUserId}`;
                 document.getElementById('postRecommend').innerText = `${data.postRecommend}`;
                 document.getElementById('postDate').innerText = `${data.postDate || "정보 없음"}`;
+                document.getElementById('postId').innerText = `${data.postId || "정보 없음"}`;
 
+            })
+            .catch(error => {
+                console.error("에러 발생:", error);
+            });
+
+        // 댓글 가져오기
+        fetch(`/getcomment/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("서버 응답 실패");
+                }
+                return response.json();  // JSON 변환
+            })
+            .then(data => {
+             console.log(data);
+
+                let commentContainer = document.getElementById("commentContainer");
+                commentContainer.innerHTML = ""; // 기존 댓글 삭제 (중복 방지)
+
+
+                data.forEach(comment => {
+
+                    let commentElementUserId = document.createElement("h3");
+                    commentElementUserId.textContent = `📌 ${comment.userId}`;
+
+                    let commentElement = document.createElement("p");
+
+                    commentElement.textContent = `ㄴ ${comment.commentContent}`;
+
+                    commentContainer.appendChild(commentElementUserId);
+                    commentContainer.appendChild(commentElement);
+
+                });
             })
             .catch(error => {
                 console.error("에러 발생:", error);
