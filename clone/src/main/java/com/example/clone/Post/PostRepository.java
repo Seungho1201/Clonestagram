@@ -18,4 +18,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     // ALTER TABLE post ADD FULLTEXT(post_content); 해서 디비에 미리 인덱스 테이블을 만들어줘야 함
     @Query(value = "select * from post where match(post_content) against(?1);", nativeQuery = true)
     List<Post> searchQuery(String text);
+
+ 
 }

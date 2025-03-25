@@ -18,17 +18,14 @@ import java.util.Map;
 public class CommentController {
 
     private final CommentRepository commentRepository;
+    private final CommentService commentService;
 
     // 상세창에서 댓글 조회
     @GetMapping("/getcomment/{id}")
     public ResponseEntity<List<Comment>> getComment(@PathVariable Long id) {
 
-        List<Comment> comments = commentRepository.findByPostId(id);
-
-        System.out.println(comments);
-
-
-        return ResponseEntity.ok(comments);
+        // Service 레이어
+        return commentService.commentGet(id);
     }
 
     // 댓글 저장
@@ -36,29 +33,7 @@ public class CommentController {
     public ResponseEntity<String> comment(@RequestBody Map<String, String> requestData,
                                           Authentication auth) {
 
-        if(auth == null) {
-            return ResponseEntity.ok("로그인해라");
-        }
-
-        // 유저 정보 GET
-        MyUserDetailsService.CustomUser customUser = (MyUserDetailsService.CustomUser) auth.getPrincipal();
-
-
-        // Body에서 데이터 가져오기
-        String postId = requestData.get("postId");
-        String commentContent = requestData.get("commentContent");
-
-
-        // Comment 객체 생성
-        Comment comment = new Comment();
-
-        comment.setPost_id(Long.valueOf(postId));
-        comment.setCommentContent(commentContent);
-        comment.setUserId(customUser.userId);
-
-        // DB 저장
-        commentRepository.save(comment);
-
-        return ResponseEntity.ok("댓글 추가 완료");
+        // Service 레이어
+        return commentService.commentSave(requestData, auth);
     }
 }

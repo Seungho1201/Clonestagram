@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 @Getter
 @Setter
 @ToString
+@Table(name = "post")
 public class Post {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long postId;            // 게시글 ID
