@@ -28,6 +28,7 @@ public class MemberService {
             return "redirect:/signup";
         }
 
+        // 멤버 객체 생성
         var member = new Member();
 
         // Setter
@@ -45,21 +46,24 @@ public class MemberService {
     // 마이 페이지 데이터 서비스
     public String getMyPage(Model model, Authentication auth){
 
-        // 로그인 X일시 로그인 페이지로
+        // 로그아웃시 로그인 페이지로
         if(auth == null){ return "login.html";  }
 
         // 유저 정보 얻기
         MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
 
-        List<Post> userPost =  postRepository.findByPostUserId(user.userId);
+        // DTO
+        MemberDTO memberDTO = new MemberDTO();
 
+        // Setter
+        memberDTO.setUserId(user.userId);
+        memberDTO.setUsername(user.getUsername());
+        memberDTO.setPostUserData(postRepository.findByPostUserId(user.userId));
 
-        String userName = user.getUsername();
-        String userId = user.userId;
-
-        model.addAttribute("userPost", userPost);
-        model.addAttribute("userName", userName);
-        model.addAttribute("userId", userId);
+        // 데이터 전송
+        model.addAttribute("userPost", memberDTO.getPostUserData());
+        model.addAttribute("userName", memberDTO.getUserId());
+        model.addAttribute("userId", memberDTO.getUserId());
 
         return "mypage.html";
     }

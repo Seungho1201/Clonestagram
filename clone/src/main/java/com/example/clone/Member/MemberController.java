@@ -20,15 +20,14 @@ import java.util.List;
 public class MemberController {
 
     private final MemberRepository memberRepository;
+    private final MemberService memberService;
     private final PasswordEncoder passwordEncoder;
     private final PostService postService;
     private final PostRepository postRepository;
 
     // 로그인 페이지
-
     @GetMapping("/login")
     String loginPage(){
-
         return "login.html";
     }
 
@@ -46,45 +45,16 @@ public class MemberController {
             @RequestParam String userId,
             @RequestParam String userPassword){
 
-        // 아이디 이미 존재할시 다시 가입 페이지로
-        if(memberRepository.findByUserId(userId).isPresent()){
-            return "redirect:/signup";
-        }
-
-        var member = new Member();
-
-        member.setUserId(userId);
-        member.setUserPassword(passwordEncoder.encode(userPassword));
-        member.setUserName(userName);
-        member.setUserEmail(userEmail);
-
-        memberRepository.save(member);
-
-        return "redirect:/login";
+        // Service 레이어
+        return memberService.addMember(userEmail, userName, userId, userPassword);
     }
 
     // 마이페이지
     @GetMapping("/mypage")
     String myPage(Model model, Authentication auth){
 
-        // 로그인 X일시 로그인 페이지로
-        if(auth == null){ return "login.html"; }
-
-        // 유저 정보 얻기
-        MyUserDetailsService.CustomUser user = (MyUserDetailsService.CustomUser) auth.getPrincipal();
-
-        List<Post> userPost =  postRepository.findByPostUserId(user.userId);
-
-        //System.out.println(userPost);
-
-        String userName = user.getUsername();
-        String userId = user.userId;
-
-        model.addAttribute("userPost", userPost);
-        model.addAttribute("userName", userName);
-        model.addAttribute("userId", userId);
-
-        return "mypage.html";
+        // Service 레이어
+        return memberService.getMyPage(model, auth);
     }
 
 
