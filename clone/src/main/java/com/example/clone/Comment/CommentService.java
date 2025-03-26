@@ -1,6 +1,6 @@
 package com.example.clone.Comment;
 
-import com.example.clone.Member.MyUserDetailsService;
+import com.example.clone.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,6 +16,7 @@ public class CommentService {
 
     // 댓글 가져오는 서비스
     public ResponseEntity<List<Comment>> commentGet(Long id){
+
         List<Comment> comments = commentRepository.findByPostId(id);
 
         return ResponseEntity.ok(comments);

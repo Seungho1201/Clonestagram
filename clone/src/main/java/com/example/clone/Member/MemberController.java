@@ -18,12 +18,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 public class MemberController {
-
-    private final MemberRepository memberRepository;
     private final MemberService memberService;
-    private final PasswordEncoder passwordEncoder;
-    private final PostService postService;
-    private final PostRepository postRepository;
 
     // 로그인 페이지
     @GetMapping("/login")
@@ -46,7 +41,13 @@ public class MemberController {
             @RequestParam String userPassword){
 
         // Service 레이어
-        return memberService.addMember(userEmail, userName, userId, userPassword);
+        Member member = memberService.addMember(userEmail, userName, userId, userPassword);
+
+        // addMember Service null 반환시 이미 존재하는 아이디
+        if(member == null){ return "signup"; }
+
+        // 회원가입 완료 후 로그인 페이지로
+        return "login";
     }
 
     // 마이페이지
@@ -56,6 +57,4 @@ public class MemberController {
         // Service 레이어
         return memberService.getMyPage(model, auth);
     }
-
-
 }

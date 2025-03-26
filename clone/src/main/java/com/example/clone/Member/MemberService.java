@@ -1,14 +1,12 @@
 package com.example.clone.Member;
 
-import com.example.clone.Post.Post;
+import com.example.clone.MyUserDetailsService;
 import com.example.clone.Post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +16,14 @@ public class MemberService {
     private final PostRepository postRepository;
 
     // 멤버 추가 서비스
-    public String addMember(String userEmail,
+    public Member addMember(String userEmail,
                             String userName,
                             String userId,
                             String userPassword){
 
         // 아이디 이미 존재할시 다시 가입 페이지로
         if(memberRepository.findByUserId(userId).isPresent()){
-            return "redirect:/signup";
+            return null;
         }
 
         // 멤버 객체 생성
@@ -40,7 +38,7 @@ public class MemberService {
         // DB 저장
         memberRepository.save(member);
 
-        return "redirect:/login";
+        return member;
     }
 
     // 마이 페이지 데이터 서비스

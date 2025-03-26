@@ -1,5 +1,6 @@
-package com.example.clone.Member;
+package com.example.clone;
 
+import com.example.clone.Member.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

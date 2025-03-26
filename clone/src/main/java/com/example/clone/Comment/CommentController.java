@@ -1,6 +1,5 @@
 package com.example.clone.Comment;
 
-import com.example.clone.Member.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -16,8 +15,6 @@ import java.util.Map;
 @Controller
 @RequiredArgsConstructor
 public class CommentController {
-
-    private final CommentRepository commentRepository;
     private final CommentService commentService;
 
     // 상세창에서 댓글 조회
@@ -25,15 +22,18 @@ public class CommentController {
     public ResponseEntity<List<Comment>> getComment(@PathVariable Long id) {
 
         // Service 레이어
-        return commentService.commentGet(id);
+        ResponseEntity<List<Comment>> commentData = commentService.commentGet(id);
+
+        return commentData;
     }
 
     // 댓글 저장
     @PostMapping ("/comment")
     public ResponseEntity<String> comment(@RequestBody Map<String, String> requestData,
                                           Authentication auth) {
-
         // Service 레이어
-        return commentService.commentSave(requestData, auth);
+        ResponseEntity<String> commentSaveData = commentService.commentSave(requestData, auth);
+
+        return commentSaveData;
     }
 }
